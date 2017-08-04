@@ -1,5 +1,6 @@
 var express = require('express');
 var fortune = require('./lib/fortune.js');
+var weatherData = require('./lib/weatherData.js');
 
 var app = express();
 
@@ -27,6 +28,12 @@ app.use(function (req, res, next) {
     next();
 });
 
+app.use(function (req, res, next) {
+    if(!res.locals.partials) res.locals.partials = {};
+    res.locals.partials.weatherContext = weatherData.getWeatherData();
+    next();
+});
+
 app.get('/', function (req, res) {
     res.render('home');
 });
@@ -46,6 +53,15 @@ app.get('/tours/request-group-rate', function (req, res) {
     res.render('tours/request-group-rate');
 });
 
+app.get('/greeting', function (req, res) {
+    res.render('about', {
+        message: 'welcome',
+        style: req.query.style,
+        userid: req.cookie.userid,
+        username: req.session.username
+    });
+});
+
 // headers test
 app.get('/headers', function (req, res) {
     res.set('Content-Type', 'text/plain');
@@ -56,17 +72,15 @@ app.get('/headers', function (req, res) {
     res.send(s);
 });
 
-// 404 catch-all handler (middleware)
+// 404 catch-all handler
 app.use(function (req, res, next) {
-    res.status(404);
-    res.render('404');
+    res.status(404).render('404');
 });
 
-// 500 error handler (middleware)
+// 500 error handler
 app.use(function (err, req, res, next) {
     console.error(err.stack);
-    res.status(500);
-    res.render('500');
+    res.status(500).render('500');
 });
 
 app.disable('x-powered-by');
