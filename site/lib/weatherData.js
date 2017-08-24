@@ -12,14 +12,14 @@ exports.getWeatherData = function () {
                 name: 'Bend',
                 forecastUrl: 'http://www.wunderground.com/US/OR/Bend.html',
                 iconUrl: 'http://icons-ak.wxug.com/i/c/k/partlycloudy.gif',
-                weather: 'partlycloudy',
+                weather: 'Partlycloudy',
                 temp: '55.0F (12.8C)'
             },
             {
                 name: 'Manzanita',
                 forecastUrl: 'http://www.wunderground.com/US/OR/Manzanita.html',
                 iconUrl: 'http://icons-ak.wxug.com/i/c/k/rain.gif',
-                weather: 'rain',
+                weather: 'Rain',
                 temp: '55.0F (12.8C)'
             }
         ]

@@ -22,6 +22,8 @@ app.set('port', process.env.PORT || 3000);
 
 app.use(express.static(__dirname + '/public'));
 
+app.use(require('body-parser').urlencoded({extended: true}));
+
 // set 'showTests' context property if the querystring contains test=1
 app.use(function (req, res, next) {
     res.locals.showTests = app.get('env') !== 'production' && req.query.test === '1';
@@ -29,7 +31,7 @@ app.use(function (req, res, next) {
 });
 
 app.use(function (req, res, next) {
-    if(!res.locals.partials) res.locals.partials = {};
+    if (!res.locals.partials) res.locals.partials = {};
     res.locals.partials.weatherContext = weatherData.getWeatherData();
     next();
 });
@@ -43,12 +45,19 @@ app.get('/about', function (req, res) {
         pageTestScript: '/qa/tests-about.js'
     });
 });
+
+app.get('/contacts', function (req, res) {
+    res.render('contacts');
+});
+
 app.get('/tours/hood-river', function (req, res) {
     res.render('tours/hood-river');
 });
+
 app.get('/tours/oregon-coast', function (req, res) {
     res.render('tours/oregon-coast');
 });
+
 app.get('/tours/request-group-rate', function (req, res) {
     res.render('tours/request-group-rate');
 });
@@ -59,6 +68,19 @@ app.get('/greeting', function (req, res) {
         style: req.query.style,
         userid: req.cookie.userid,
         username: req.session.username
+    });
+});
+
+app.get('/nursery-rhyme', function (req, res) {
+    res.render('nursery-rhyme');
+});
+
+app.get('/data/nursery-rhyme', function (req, res) {
+    res.json({
+        animal: 'squirrel',
+        bodyPart: 'tail',
+        adjective: 'bushy',
+        noun: 'heck'
     });
 });
 
