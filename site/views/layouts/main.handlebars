@@ -13,10 +13,18 @@
   <img src="/img/logo.svg" alt="Pizza Site Logo">
 </header>
   <div class="container">
+    {{#if flash}}
+        <div class="alert alert-dismissible alert-{{flash.type}}">
+		  <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+		  <strong>{{flash.intro}}</strong> {{{flash.message}}}
+        </div>
+    {{/if}}
     {{{body}}}
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.0.2/jquery.min.js"></script>
     {{{_sections.jquery}}}
-    <footer>&copy; Pizza Site</footer>
+    <div class="container">
+      <footer>&copy; Pizza Site</footer>
+    </div>
   </div>
   {{#if showTests}}
       <div id="mocha"></div>
